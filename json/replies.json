@@ -1,1 +1,94 @@
-{"ok": true, "messages": [{"user": "U078FB76K5F", "type": "message", "ts": "1720357828.912929", "edited": {"user": "B077ZPZ3RB7", "ts": "1720359121.000000"}, "bot_id": "B077ZPZ3RB7", "app_id": "A077VUVED54", "text": "Time Remaining: 42 minutes - In Progress", "team": "T0266FRGM", "bot_profile": {"id": "B077ZPZ3RB7", "deleted": false, "name": "hakkuun", "updated": 1718555404, "app_id": "A077VUVED54", "icons": {"image_36": "https://avatars.slack-edge.com/2024-06-16/7283644737411_d53024a23f25b1cddaca_36.png", "image_48": "https://avatars.slack-edge.com/2024-06-16/7283644737411_d53024a23f25b1cddaca_48.png", "image_72": "https://avatars.slack-edge.com/2024-06-16/7283644737411_d53024a23f25b1cddaca_72.png"}, "team_id": "T0266FRGM"}, "thread_ts": "1720357828.841619", "parent_user_id": "U078FB76K5F", "blocks": [{"type": "section", "block_id": "gjboW", "text": {"type": "mrkdwn", "text": "You have `42` minutes remaining! You're doing great!", "verbatim": false}}, {"type": "divider", "block_id": "/QFBf"}, {"type": "actions", "block_id": "panel", "elements": [{"type": "button", "action_id": "pause", "text": {"type": "plain_text", "text": "Pause", "emoji": true}, "value": "ds3uy5fufep7h9yzq0aj5hmo"}, {"type": "button", "action_id": "cancel", "text": {"type": "plain_text", "text": "End Early", "emoji": true}}, {"type": "button", "action_id": "opengoal", "text": {"type": "plain_text", "text": "Change Goal", "emoji": true}}]}, {"type": "context", "block_id": "7IMCf", "elements": [{"type": "mrkdwn", "text": "*Goal:* No Goal - 0.3 hours", "verbatim": false}]}]}], "has_more": false}
+{
+  "ok": true,
+  "messages": [
+    {
+      "user": "U078FB76K5F",
+      "type": "message",
+      "ts": "1720362262.745569",
+      "edited": {
+        "user": "B077ZPZ3RB7",
+        "ts": "1720362841.000000"
+      },
+      "bot_id": "B077ZPZ3RB7",
+      "app_id": "A077VUVED54",
+      "text": "Time Remaining: 50 minutes - In Progress",
+      "team": "T0266FRGM",
+      "bot_profile": {
+        "id": "B077ZPZ3RB7",
+        "deleted": false,
+        "name": "hakkuun",
+        "updated": 1718555404,
+        "app_id": "A077VUVED54",
+        "icons": {
+          "image_36": "https://avatars.slack-edge.com/2024-06-16/7283644737411_d53024a23f25b1cddaca_36.png",
+          "image_48": "https://avatars.slack-edge.com/2024-06-16/7283644737411_d53024a23f25b1cddaca_48.png",
+          "image_72": "https://avatars.slack-edge.com/2024-06-16/7283644737411_d53024a23f25b1cddaca_72.png"
+        },
+        "team_id": "T0266FRGM"
+      },
+      "thread_ts": "1720362262.676449",
+      "parent_user_id": "U078FB76K5F",
+      "blocks": [
+        {
+          "type": "section",
+          "block_id": "iCzkF",
+          "text": {
+            "type": "mrkdwn",
+            "text": "You have `50` minutes remaining! Keep it up!",
+            "verbatim": false
+          }
+        },
+        {
+          "type": "divider",
+          "block_id": "DhIw5"
+        },
+        {
+          "type": "actions",
+          "block_id": "panel",
+          "elements": [
+            {
+              "type": "button",
+              "action_id": "pause",
+              "text": {
+                "type": "plain_text",
+                "text": "Pause",
+                "emoji": true
+              },
+              "value": "h9hdasvjjetpo19u8f3uy4nf"
+            },
+            {
+              "type": "button",
+              "action_id": "cancel",
+              "text": {
+                "type": "plain_text",
+                "text": "End Early",
+                "emoji": true
+              }
+            },
+            {
+              "type": "button",
+              "action_id": "opengoal",
+              "text": {
+                "type": "plain_text",
+                "text": "Change Goal",
+                "emoji": true
+              }
+            }
+          ]
+        },
+        {
+          "type": "context",
+          "block_id": "x2cvA",
+          "elements": [
+            {
+              "type": "mrkdwn",
+              "text": "*Goal:* No Goal - 0.1 hours",
+              "verbatim": false
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "has_more": false
+}

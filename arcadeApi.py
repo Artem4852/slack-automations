@@ -7,10 +7,11 @@ from api import SlackApi
 class ArcadeApi:
     """
     A class to interact with the arcade channel in Slack"""
-    def __init__(self, save=False, debug=False):
+    def __init__(self, user_id, save=False, debug=False):
         self.api = SlackApi(save=save, debug=debug)
         self.current_session_ts = None
         self.paused = False
+        self.user_id = user_id
     
     def start_session(self, title):
         """
@@ -19,6 +20,7 @@ class ArcadeApi:
         Args:
             title (str): The title of the arcade session"""
         if self.current_session_ts: raise Exception("Session is already in progress. Finish the current session first.")
+        time.sleep(2)
         self.api.post_command(channels["arcade"], "arcade", title)
         self.current_session_ts = self.get_latest_session_ts()
 
@@ -29,7 +31,8 @@ class ArcadeApi:
         Args:
             ts (str): The timestamp of the arcade session to load"""
         self.current_session_ts = ts
-        self.api.get_conversation_replies(channels["arcade"], ts)
+        messages = self.api.get_conversation_replies(channels["arcade"], ts)["messages"]
+        self.paused = "Paused" in messages[0]["text"]
     
     def get_latest_session_ts(self) -> str:
         """
@@ -37,7 +40,7 @@ class ArcadeApi:
 
         Returns:
             str: The timestamp of the latest arcade session"""
-        ts = self.api.search("from:@hakkuun <@U078W0AP3FZ> in:#arcade \"minutes\"")["items"][0]["messages"][0]["ts"]
+        ts = self.api.search(f"from:@hakkuun <@{self.user_id}> in:#arcade \"minutes\"")["items"][0]["messages"][0]["ts"]
         return ts
     
     def pause_session(self) -> None:
@@ -66,14 +69,15 @@ class ArcadeApi:
 
         Returns:
             int: The time left in the current arcade session"""
-        # start = datetime.fromtimestamp(float(self.current_session_ts))
-        # now = datetime.now()
-        # left = 60 - (now - start).seconds // 60
-        # return left
         messages = self.api.get_conversation_replies(channels["arcade"], self.current_session_ts)["messages"]
-        left = messages[0]["text"].replace("Time Remaining: ", "")
-        left = int(left[:left.find(" ")])
+        left = messages[0]["text"]
+        left = int(left[:left.index(" minutes")].split(" ")[-1])
         return left
+    
+    def change_goal(self) -> None:
+        """
+        Change the goal of the current arcade session"""
+        self.api.post_action("arcade", self.current_session_ts, "opengoal")
     
     def post_reply(self, message) -> None:
         """

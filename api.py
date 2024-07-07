@@ -37,13 +37,13 @@ class SlackApi:
 
         return data
 
-    def get_channel_messages(self) -> dict:
+    def get_channel_messages(self, channel) -> dict:
         """
         Get the messages in the arcade channel"""
         url = urls["get_channel_messages"]
         form = forms["get_channel_messages"]
         form["token"] = self.token
-        form["channel"] = channels["arcade"]
+        form["channel"] = channels[channel]
         response = self.session.post(url, headers=headers, data=form)
         
         data = response.json()
@@ -136,7 +136,7 @@ class SlackApi:
 
         return data
 
-    def submit_view(self, view_id, values) -> dict:
+    def submit_view(self, view_id, values={}) -> dict:
         """
         Submit a view
         

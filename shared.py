@@ -33,7 +33,9 @@ channels = {
 
 actions = {
     "pause": "[{\"action_id\":\"pause\",\"block_id\":\"panel\",\"text\":{\"type\":\"plain_text\",\"text\":\"Pause\",\"emoji\":true},\"value\":\"gf8epwufiarkmz701ckm2c28\",\"type\":\"button\"}]",
-    "resume": "[{\"action_id\":\"resume\",\"block_id\":\"panel\",\"text\":{\"type\":\"plain_text\",\"text\":\"Resume\",\"emoji\":true},\"value\":\"gf8epwufiarkmz701ckm2c28\",\"type\":\"button\"}]"
+    "resume": "[{\"action_id\":\"resume\",\"block_id\":\"panel\",\"text\":{\"type\":\"plain_text\",\"text\":\"Resume\",\"emoji\":true},\"value\":\"gf8epwufiarkmz701ckm2c28\",\"type\":\"button\"}]",
+    "opengoal": "[{\"action_id\":\"opengoal\",\"block_id\":\"panel\",\"text\":{\"type\":\"plain_text\",\"text\":\"Change Goal\",\"emoji\":true},\"type\":\"button\"}]",
+    "end": "[{\"action_id\":\"cancel\",\"block_id\":\"panel\",\"text\":{\"type\":\"plain_text\",\"text\":\"End Early\",\"emoji\":true},\"type\":\"button\"}]",
 }
 
 forms = {

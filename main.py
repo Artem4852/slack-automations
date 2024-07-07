@@ -1,20 +1,17 @@
-from shared import urls, forms, headers, save_json, channels, actions
 from arcadeApi import ArcadeApi
 import requests, time
 
-api = ArcadeApi(save=True, debug=False)
+api = ArcadeApi(user_id="U07BBJR072P", save=True, debug=False)
 
-# print(reply_to_thread(channels["arcade"], "1720266789.748599", "Test"))
-# unreplied = get_channel_messages()
-# print(unreplied)
-# for message in unreplied:
-#     reply_to_thread(channels["arcade"], message["ts"], "Test")
+api.start_session("Test")
+# api.load_session("1720362262.745569")
 
-# print(post_command(channels["arcade"], "arcade", "test"))
-# print(post_action("arcade", "1720345345.827299", "pause"))
-# print(get_conversation_replies(channels["arcade"], "1720345345.827299"))
+# time.sleep(3)
+# api.resume_session()
 
-api.current_session_ts = "1720357828.912929"
-# api.pause_session()
-# api.load_session("1720357828.912929")
-print(api.get_time_left())
+# print(api.get_time_left())
+# api.post_reply("link")
+# api.end_session()
+
+print(api.api.post_action("arcade", api.current_session_ts, "end"))
+print(api.api.submit_view("V07B558HGP8"))
