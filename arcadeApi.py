@@ -19,18 +19,21 @@ class ArcadeApi:
 
         Args:
             title (str): The title of the arcade session"""
-        if self.current_session_ts: raise Exception("Session is already in progress. Finish the current session first.")
+        print("Starting session")
+        if self.current_session_ts or self.get_latest_session_ts(): raise Exception("Session is already in progress. Finish the current session first.")
+        print("Starting session2")
         time.sleep(2)
         self.api.post_command(channels["arcade"], "arcade", title)
         self.current_session_ts = self.get_latest_session_ts()
 
-    def load_session(self, ts) -> None:
+    def load_session(self, ts=None) -> None:
         """
         Load an existing arcade session
         
         Args:
             ts (str): The timestamp of the arcade session to load"""
-        self.current_session_ts = ts
+        if ts: self.current_session_ts = ts
+        else: self.current_session_ts = self.get_latest_session_ts()
         messages = self.api.get_conversation_replies(channels["arcade"], ts)["messages"]
         self.paused = "Paused" in messages[0]["text"]
     
@@ -40,8 +43,11 @@ class ArcadeApi:
 
         Returns:
             str: The timestamp of the latest arcade session"""
-        ts = self.api.search(f"from:@hakkuun <@{self.user_id}> in:#arcade \"minutes\"")["items"][0]["messages"][0]["ts"]
-        return ts
+        try: 
+            ts = self.api.search(f"from:@hakkuun <@{self.user_id}> in:#arcade \"minutes\"")["items"][0]["messages"][0]["ts"]
+            return ts
+        except:
+            return None
     
     def pause_session(self) -> None:
         """
@@ -57,12 +63,6 @@ class ArcadeApi:
         self.api.post_action("arcade", self.current_session_ts, "resume")
         self.paused = False
 
-    def end_session(self) -> None:
-        """
-        End the current arcade session"""
-        self.api.post_command(channels["arcade"], "arcade", "end")
-        self.current_session_ts = None
-
     def get_time_left(self) -> int:
         """
         Get the time left (in minutes) in the current arcade session
@@ -73,11 +73,6 @@ class ArcadeApi:
         left = messages[0]["text"]
         left = int(left[:left.index(" minutes")].split(" ")[-1])
         return left
-    
-    def change_goal(self) -> None:
-        """
-        Change the goal of the current arcade session"""
-        self.api.post_action("arcade", self.current_session_ts, "opengoal")
     
     def post_reply(self, message) -> None:
         """

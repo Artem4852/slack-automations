@@ -136,26 +136,6 @@ class SlackApi:
 
         return data
 
-    def submit_view(self, view_id, values={}) -> dict:
-        """
-        Submit a view
-        
-        Args:
-            view_id (str): The ID of the view
-            values (dict): The values to submit"""
-        url = urls["submit_view"]
-        form = forms["submit_view"]
-        form["token"] = self.token
-        form["view_id"] = view_id
-        form["state"] = form["state"].format(values=values)
-        response = self.session.post(url, headers=headers, data=form)
-        data = response.json()
-
-        if self.save: save_json(data, "json/submit_view.json")
-        if self.debug: print(data)
-
-        return data
-
     def reply_to_thread(self, channel, ts, text) -> dict:
         """
         Reply to a thread

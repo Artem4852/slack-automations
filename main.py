@@ -1,5 +1,4 @@
 from arcadeApi import ArcadeApi
-import requests, time
 
 api = ArcadeApi(user_id="U07BBJR072P", save=True, debug=False)
 
