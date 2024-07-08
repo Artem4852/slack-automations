@@ -19,11 +19,9 @@ class ArcadeApi:
 
         Args:
             title (str): The title of the arcade session"""
-        print("Starting session")
-        if self.current_session_ts or self.get_latest_session_ts(): raise Exception("Session is already in progress. Finish the current session first.")
-        print("Starting session2")
-        time.sleep(2)
+        if self.current_session_ts: raise Exception("Session is already in progress. Finish the current session first.")
         self.api.post_command(channels["arcade"], "arcade", title)
+        time.sleep(2)
         self.current_session_ts = self.get_latest_session_ts()
 
     def load_session(self, ts=None) -> None:
@@ -35,7 +33,7 @@ class ArcadeApi:
         if ts: self.current_session_ts = ts
         else: self.current_session_ts = self.get_latest_session_ts()
         messages = self.api.get_conversation_replies(channels["arcade"], ts)["messages"]
-        self.paused = "Paused" in messages[0]["text"]
+        self.paused = not "until the session is ended early." in messages[0]["text"]
     
     def get_latest_session_ts(self) -> str:
         """
@@ -52,14 +50,16 @@ class ArcadeApi:
     def pause_session(self) -> None:
         """
         Pause the current arcade session"""
-        if self.paused: raise Exception("Session is already paused")
+        if not self.current_session_ts: raise Exception("No active session")
+        elif self.paused: raise Exception("Session is already paused")
         self.api.post_action("arcade", self.current_session_ts, "pause")
         self.paused = True
     
     def resume_session(self) -> None:
         """
         Resume the current arcade session"""
-        if not self.paused: raise Exception("Session is not paused")
+        if not self.current_session_ts: raise Exception("No active session")
+        elif not self.paused: raise Exception("Session is not paused")
         self.api.post_action("arcade", self.current_session_ts, "resume")
         self.paused = False
 

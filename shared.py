@@ -70,7 +70,7 @@ forms = {
     "post_action": {
         "token": "",
         "actions": "",
-        "container": "{{\"type\":\"message\",\"message_ts\":\"{ts}\",\"channel_id\":\"{channel}\",\"is_ephemeral\":false}}",
+        "container": '{{"type":"message","message_ts":"{ts}","channel_id":"{channel}","is_ephemeral":false}}',
         "service_id": "B077ZPZ3RB7",
         "client_token": "web-1720344935585"
     },
