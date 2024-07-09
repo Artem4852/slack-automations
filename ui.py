@@ -1,4 +1,4 @@
-import sys, os
+import sys, os, json
 from PyQt5.QtWidgets import QApplication, QLabel, QMainWindow, QPushButton, QLineEdit, QMessageBox
 from PyQt5.QtGui import QFont, QFontDatabase
 from arcadeApi import ArcadeApi
@@ -117,6 +117,7 @@ class MainWindow(QMainWindow):
         if len(length_parts) != 2 or not all(part.isdigit() for part in length_parts):
             self.show_error_message("Please enter a valid session length in h:m format")
             return
+        
 
         if not directory_path:
             self.show_error_message("Please enter a directory path")
@@ -126,6 +127,8 @@ class MainWindow(QMainWindow):
             self.show_error_message("The specified directory does not exist")
             return
 
+        self.go_to_directory()
+
         try:
             self.arcadeApi.start_session(title)
             self.label_session_title.setText(f"Session title: Session '{title}' started successfully")
@@ -134,29 +137,36 @@ class MainWindow(QMainWindow):
             self.label_session_title.setText(f"Session title: Error - {error_message}")
             self.show_error_message(f"Error starting session: {error_message}")
 
+    def go_to_directory(self):
+        os.system(f"cd {self.input_directory_path.text()}")
+        with open(f"config.json", "w") as f:
+            f.write(json.dumps({"title": self.input_session_title.text(), "length": self.input_session_length.text()}))
+
     def pause_session(self):
         print("pause")
         try: 
             self.arcadeApi.pause_session()
-        except: 
+        except Exception as e: 
             if not self.arcadeApi.current_session_ts:
                 self.show_error_message("Start a session first")
                 return
             elif self.arcadeApi.paused:
                 self.show_error_message("Session is paused already")
                 return
+            self.show_error_message(f"Unexpected exception: {str(e)}")
             
     def resume_session(self):
         print("resume")
         try:
             self.arcadeApi.resume_session()
-        except:
+        except Exception as e:
             if not self.arcadeApi.current_session_ts:
                 self.show_error_message("Start a session first")
                 return
             elif not self.arcadeApi.paused:
                 self.show_error_message("Session is not paused")
                 return
+            self.show_error_message(f"Unexpected exception: {str(e)}")
             
     def post_reply(self):
         text = self.input_reply.text()

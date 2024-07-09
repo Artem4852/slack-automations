@@ -21,8 +21,8 @@ class ArcadeApi:
             title (str): The title of the arcade session"""
         if self.current_session_ts: raise Exception("Session is already in progress. Finish the current session first.")
         self.api.post_command(channels["arcade"], "arcade", title)
-        time.sleep(2)
-        self.current_session_ts = self.get_latest_session_ts()
+        time.sleep(10)
+        self.current_session_ts = self.get_latest_session_ts(True)
 
     def load_session(self, ts=None) -> None:
         """
@@ -35,14 +35,14 @@ class ArcadeApi:
         messages = self.api.get_conversation_replies(channels["arcade"], ts)["messages"]
         self.paused = not "until the session is ended early." in messages[0]["text"]
     
-    def get_latest_session_ts(self) -> str:
+    def get_latest_session_ts(self, start=False) -> str:
         """
         Get the timestamp of the latest arcade session
 
         Returns:
             str: The timestamp of the latest arcade session"""
         try: 
-            ts = self.api.search(f"from:@hakkuun <@{self.user_id}> in:#arcade \"minutes\"")["items"][0]["messages"][0]["ts"]
+            ts = self.api.search(f"from:@hakkuun <@{self.user_id}> in:#arcade " + ("\"minutes\"" if not start else "60 minutes"))["items"][0]["messages"][0]["ts"]
             return ts
         except:
             return None
@@ -52,14 +52,18 @@ class ArcadeApi:
         Pause the current arcade session"""
         if not self.current_session_ts: raise Exception("No active session")
         elif self.paused: raise Exception("Session is already paused")
-        self.api.post_action("arcade", self.current_session_ts, "pause")
+        # self.current_session_ts = self.get_latest_session_ts()
+        print(self.current_session_ts)
+        print(self.api.post_action("arcade", self.current_session_ts, "pause"))
         self.paused = True
+        print(self.paused)
     
     def resume_session(self) -> None:
         """
         Resume the current arcade session"""
         if not self.current_session_ts: raise Exception("No active session")
         elif not self.paused: raise Exception("Session is not paused")
+        # self.current_session_ts = self.get_latest_session_ts()
         self.api.post_action("arcade", self.current_session_ts, "resume")
         self.paused = False
 

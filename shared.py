@@ -72,14 +72,8 @@ forms = {
         "actions": "",
         "container": '{{"type":"message","message_ts":"{ts}","channel_id":"{channel}","is_ephemeral":false}}',
         "service_id": "B077ZPZ3RB7",
-        "client_token": "web-1720344935585"
+        "client_token": "web-1720510987040"
     },
-    "submit_view": {
-        "token": "",
-        "client_token": "web-1720359314455",
-        "view_id": "",
-        "state": "{{\"values\":{values}}}",
-    }, 
     "search": {
         "token": "",
         "module": "messages",
